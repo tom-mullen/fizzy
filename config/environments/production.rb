@@ -7,17 +7,11 @@ Rails.application.configure do
   #
   # SMTP setting can be configured via environment variables.
   # For other configuration options, consult the Action Mailer documentation.
-  if smtp_address = ENV["SMTP_ADDRESS"].presence
-    config.action_mailer.delivery_method = :smtp
-    config.action_mailer.smtp_settings = {
-      address: smtp_address,
-      port: ENV.fetch("SMTP_PORT", ENV["SMTP_TLS"] == "true" ? "465" : "587").to_i,
-      domain: ENV.fetch("SMTP_DOMAIN", nil),
-      user_name: ENV.fetch("SMTP_USERNAME", nil),
-      password: ENV.fetch("SMTP_PASSWORD", nil),
-      authentication: ENV.fetch("SMTP_AUTHENTICATION", "plain"),
-      tls: ENV["SMTP_TLS"] == "true",
-      openssl_verify_mode: ENV["SMTP_SSL_VERIFY_MODE"]
+
+  config.action_mailer.delivery_method = :postmark
+  if postmark_token = ENV["POSTMARK_API_TOKEN"].presence
+    config.action_mailer.postmark_settings = {
+      api_token: postmark_token
     }
   end
 

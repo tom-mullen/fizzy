@@ -2,13 +2,12 @@
 service: fizzy
 image: fizzy
 
-
 #-- About your deployment --#
 
 # Where to deploy fizzy
 servers:
   web:
-    - fizzy.example.com  # Set your server name here
+    - 209.97.139.143
 
 # How you connect to your server
 ssh:
@@ -17,28 +16,40 @@ ssh:
 # Automatic SSL
 proxy:
   ssl: true                # Set this to false if you *don't* want SSL
-  host: fizzy.example.com  # Set your server name here to use automatic SSL
+  host: fizzy.si.works  # Set your server name here to use automatic SSL
 
 # Your application configuration (secrets come from .kamal/secrets).
 env:
   secret:
+    - DATABASE_ADAPTER
+    - MYSQL_HOST
+    - MYSQL_PORT
+    - MYSQL_USER
+    - MYSQL_PASSWORD
+    - MYSQL_SSL_MODE
+    - POSTMARK_API_TOKEN
+    - ACTIVE_STORAGE_SERVICE
+    - S3_ACCESS_KEY_ID
+    - S3_BUCKET
+    - S3_ENDPOINT
+    - S3_REGION
+    - S3_SECRET_ACCESS_KEY
     - SECRET_KEY_BASE
     - VAPID_PUBLIC_KEY
     - VAPID_PRIVATE_KEY
-    - SMTP_USERNAME
-    - SMTP_PASSWORD
   clear:
-    MAILER_FROM_ADDRESS: support@example.com # The email "from" address that Fizzy sends email from
-    SMTP_ADDRESS: mail.example.com # The SMTP server you'll use to send email
+    MAILER_FROM_ADDRESS: support@fizzy.si.works # The email "from" address that Fizzy sends email from
     MULTI_TENANT: false # Set to true to allow multiple accounts to sign up
     SOLID_QUEUE_IN_PUMA: true # Run background jobs in the app container
-
 
 #-- General configuration --#
 
 # Use a local registry to deploy
 registry:
-  server: localhost:5555
+  server: registry.digitalocean.com/ok-boring
+  username: kamal-skiff
+  password:
+    - KAMAL_REGISTRY_PASSWORD
 
 # Handy aliases for interacting with your deployment. For eaxmple: `bin/kamal console` will connect to a
 # Rails console in production.
@@ -51,7 +62,7 @@ aliases:
 # Use a persistent storage volume for sqlite database files and local Active Storage files.
 # Recommended to change this to a mounted volume path that is backed up off server.
 volumes:
-  - "fizzy_storage:/rails/storage"
+  - "/var/fizzy/db:/data"
 
 # Bridge fingerprinted assets, like JS and CSS, between versions to avoid
 # hitting 404 on in-flight requests. Combines all files from new and old

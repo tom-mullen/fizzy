@@ -37,6 +37,7 @@ gem "net-http-persistent"
 gem "rubyzip", require: "zip"
 gem "mittens"
 gem "useragent", bc: "useragent"
+gem "postmark-rails"
 
 # Operations
 gem "autotuner"
