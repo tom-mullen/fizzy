@@ -38,7 +38,7 @@ env:
     - VAPID_PUBLIC_KEY
     - VAPID_PRIVATE_KEY
   clear:
-    MAILER_FROM_ADDRESS: support@fizzy.si.works # The email "from" address that Fizzy sends email from
+    MAILER_FROM_ADDRESS: fizzy-support@si.works # The email "from" address that Fizzy sends email from
     MULTI_TENANT: false # Set to true to allow multiple accounts to sign up
     SOLID_QUEUE_IN_PUMA: true # Run background jobs in the app container
 
